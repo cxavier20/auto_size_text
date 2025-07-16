@@ -1,12 +1,11 @@
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 double effectiveFontSize(Text text) =>
-    (text.textScaleFactor ?? 1) * text.style!.fontSize!;
+    text.textScaler?.scale(text.style!.fontSize!) ?? text.style!.fontSize!;
 
 double? effectiveLetterSpacing(Text text) => text.style!.letterSpacing;
 
@@ -27,7 +26,7 @@ bool doesTextFit(
     text: span,
     textAlign: text.textAlign ?? TextAlign.start,
     textDirection: text.textDirection,
-    textScaleFactor: text.textScaleFactor ?? 1,
+    textScaler: text.textScaler ?? TextScaler.linear(1),
     maxLines: text.maxLines,
     locale: text.locale,
     strutStyle: text.strutStyle,
